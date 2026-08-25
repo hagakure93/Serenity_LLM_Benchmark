@@ -1,0 +1,182 @@
+[
+  {
+    "id": "cp-apropiacion-indebida",
+    "group": "test",
+    "question": "¿Por qué es apropiación indebida y no administración desleal?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > tests > resultado > Pregunta: 53/100 (Ref. [{[ ACCOUNT_NUMBER-1 ]}])\r\nLeire, administradora de la empresa TRANSPORTES D., utiliza 50.000 euros del dinero de la empresa para pagar la entrada de su nuevo ático, con el fin de evitar pedir un préstamo personal al banco. Leire es culpable de:\r\nA) Un delito de apropiación indebida. - Respuesta correcta\r\nB) Un delito de administración desleal.\r\nC) Un delito de administración desleal agravada."
+  },
+  {
+    "id": "cp-hurto-vs-robo",
+    "group": "test",
+    "question": "¿Por qué es delito leve de hurto y no delito menos grave?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > tests > resultado > Pregunta: 27/100 (Ref. [{[ ACCOUNT_NUMBER-1 ]}])\r\nJuan sustrae un teléfono móvil valorado en 300 euros del bolsillo de un viajero en el autobús, sin emplear fuerza en las cosas ni violencia sobre las personas. Juan comete:\r\nA) Un delito leve de hurto. - Respuesta correcta\r\nB) Un delito de robo con fuerza en las cosas.\r\nC) Un delito de robo con violencia o intimidación."
+  },
+  {
+    "id": "cp-lesiones",
+    "group": "test",
+    "question": "¿Qué se entiende por tratamiento médico o quirúrgico en el artículo 147?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > tests > resultado > Pregunta: 71/100 (Ref. [{[ ACCOUNT_NUMBER-1 ]}])\r\nEn una discusión de tráfico, Andrés golpea a otro conductor causándole una fractura de nariz que requiere tratamiento quirúrgico. Andrés responde por:\r\nA) Un delito de lesiones del artículo 147.1 CP. - Respuesta correcta\r\nB) Un delito leve de lesiones del artículo 147.2 CP.\r\nC) Un delito de lesiones agravadas del artículo 149 CP."
+  },
+  {
+    "id": "ce-titulo-preliminar",
+    "group": "temario",
+    "question": "¿Cuáles son los valores superiores del ordenamiento jurídico según el artículo 1.1?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > temario > tema 1: la constitución española de 1978"
+  },
+  {
+    "id": "ce-derechos-detencion",
+    "group": "temario",
+    "question": "¿Cuál es el plazo máximo de la detención preventiva y en qué artículo está?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > temario > tema 3: derechos y deberes fundamentales"
+  },
+  {
+    "id": "ce-corona",
+    "group": "temario",
+    "question": "¿Qué actos del Rey necesitan refrendo y quién los refrenda?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > temario > tema 5: la corona"
+  },
+  {
+    "id": "ce-gobierno",
+    "group": "temario",
+    "question": "¿Qué diferencia hay entre la moción de censura y la cuestión de confianza?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > temario > tema 7: el gobierno y la administración"
+  },
+  {
+    "id": "ce-tribunal-constitucional",
+    "group": "temario",
+    "question": "¿Cómo se compone el Tribunal Constitucional y cuánto duran sus magistrados?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > temario > tema 9: el poder judicial y el tribunal constitucional"
+  },
+  {
+    "id": "ue-instituciones",
+    "group": "temario",
+    "question": "¿Qué diferencia hay entre el Consejo Europeo y el Consejo de la Unión Europea?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > temario > tema 11: la unión europea"
+  },
+  {
+    "id": "fcs-lo2-1986",
+    "group": "temario",
+    "question": "¿Cuáles son los principios básicos de actuación del artículo 5?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > temario > tema 12: ley orgánica 2/1986 de fuerzas y cuerpos de seguridad"
+  },
+  {
+    "id": "seguridad-ciudadana-lo4-2015",
+    "group": "temario",
+    "question": "¿En qué supuestos se puede requerir la identificación de una persona en la vía pública?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > temario > tema 14: protección de la seguridad ciudadana"
+  },
+  {
+    "id": "extranjeria",
+    "group": "temario",
+    "question": "¿Qué diferencia hay entre devolución y expulsión?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > temario > tema 16: derecho de extranjería"
+  },
+  {
+    "id": "violencia-genero",
+    "group": "temario",
+    "question": "¿Qué medidas de protección puede acordar el juez en un caso de violencia de género?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > temario > tema 17: igualdad efectiva y violencia de género"
+  },
+  {
+    "id": "entrada-domicilio",
+    "group": "otros",
+    "question": "¿Cuándo se puede entrar en un domicilio sin autorización judicial?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > clase-en-directo"
+  },
+  {
+    "id": "topografia",
+    "group": "temario",
+    "question": "¿Qué son las coordenadas UTM y cómo se leen?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > temario > tema 22: topografía"
+  },
+  {
+    "id": "psicologia-testigo",
+    "group": "temario",
+    "question": "¿Qué diferencia hay entre memoria a corto plazo y memoria de trabajo?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > temario > tema 20: psicología"
+  },
+  {
+    "id": "materiales-descarga",
+    "group": "otros",
+    "question": "¿Qué diferencia hay entre el bloque de ciencias jurídicas y el de ciencias sociales?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aulavirtual > materiales"
+  },
+  {
+    "id": "lecrim-detencion",
+    "group": "test",
+    "question": "¿En qué casos puede detener un particular según el artículo 490?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > tests > resultado > Pregunta: 88/100 (Ref. [{[ ACCOUNT_NUMBER-1 ]}])\r\nUn particular sorprende a una persona en el momento de cometer un delito y la retiene hasta la llegada de la policía. Esta actuación es:\r\nA) Una detención lícita del artículo 490 de la LECrim. - Respuesta correcta\r\nB) Un delito de detención ilegal del artículo 163 CP.\r\nC) Una actuación atípica sin cobertura legal."
+  },
+  {
+    "id": "conv-fechas",
+    "group": "soporte",
+    "question": "¿Se sabe ya cuándo sale la convocatoria de este año en el BOE?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > convocatoria"
+  },
+  {
+    "id": "conv-plazas",
+    "group": "soporte",
+    "question": "¿Cuántas plazas se convocan este año y cuántas son de turno libre?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > convocatoria"
+  },
+  {
+    "id": "conv-requisitos",
+    "group": "soporte",
+    "question": "¿Qué requisitos me piden para poder presentarme?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > convocatoria"
+  },
+  {
+    "id": "conv-instancia",
+    "group": "soporte",
+    "question": "¿Cómo se rellena la instancia y dónde se presenta?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > convocatoria"
+  },
+  {
+    "id": "conv-pruebas-fisicas",
+    "group": "soporte",
+    "question": "¿Qué pruebas físicas hay y en qué orden se pasan?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > convocatoria"
+  },
+  {
+    "id": "conv-pruebas-medicas",
+    "group": "soporte",
+    "question": "¿Qué me miran exactamente en el reconocimiento médico?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > convocatoria"
+  },
+  {
+    "id": "conv-tatuajes",
+    "group": "soporte",
+    "question": "Tengo un tatuaje en el antebrazo, ¿me excluye para Policía Nacional?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > convocatoria"
+  },
+  {
+    "id": "conv-antecedentes",
+    "group": "soporte",
+    "question": "¿Puedo presentarme si tengo antecedentes penales ya cancelados?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > convocatoria"
+  },
+  {
+    "id": "conv-equivalencias",
+    "group": "soporte",
+    "question": "Tengo un FP de grado superior, ¿me vale como titulación para presentarme?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > convocatoria"
+  },
+  {
+    "id": "plataforma-acceso",
+    "group": "soporte",
+    "question": "No puedo entrar en el aula virtual, me dice que la contraseña no es correcta.",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > mi-cuenta"
+  },
+  {
+    "id": "plataforma-clases",
+    "group": "soporte",
+    "question": "¿Dónde veo la clase de ayer si no pude conectarme en directo?",
+    "seccion": "curso policía ultra (43ª) presencial málaga > aula-virtual > clase-en-directo"
+  },
+  {
+    "id": "plataforma-matricula",
+    "group": "soporte",
+    "question": "¿Puedo cambiarme del curso online al presencial de Málaga?",
+    "seccion": "curso policía nacional escala básica (44ª) online > aula-virtual > mi-cuenta"
+  }
+]

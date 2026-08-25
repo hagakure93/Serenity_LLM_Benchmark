@@ -1,0 +1,25 @@
+# Secretos / entorno (NUNCA subir)
+.env
+*.key
+
+# Datos de ejecución / personales (no subir)
+# - registro de consultas al agente (preguntas/respuestas/coste)
+registro_consultas.jsonl
+# - resultados guardados de la prueba de carga
+resultados*.json
+results/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Original / redundante
+files.zip
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
