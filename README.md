@@ -68,6 +68,10 @@ python app.py
 - Lanza N hilos concurrentes con POST al endpoint configurado y mide en vivo:
   completadas, éxitos/errores, latencias (media/mín/máx, p50/p90/p95), req/s.
 - Descarga los resultados en JSON al terminar.
+- **Cómo interpretar**: tasa de éxito < 100 % = el servidor empieza a fallar bajo
+  carga; **p95** muy por encima de la media = algunas peticiones se atascan;
+  latencia que crece al subir usuarios = busca el nº a partir del cual se degrada
+  (prueba 5, 10, 20, 30…); errores **TIMEOUT** = el bot tarda más que el timeout.
 
 ### 2) Observabilidad del agente (Serenity Star)
 - **1 consulta por pulsación** (sin bucles ni concurrencia). Usa el endpoint real
@@ -121,4 +125,3 @@ La clave del agente se pasa por la cabecera **`X-API-KEY`**. Dónde ponerla:
 - `requirements.txt` — dependencias.
 - `preguntas_banco.json` — banco de preguntas del desplegable.
 - `registro_consultas.jsonl` — registro de consultas (generado en ejecución; ignorado por git).
-- `LEEME.md` — nota original de la prueba de carga.
