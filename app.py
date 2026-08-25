@@ -680,6 +680,12 @@ HTML = r"""<!DOCTYPE html>
   <span class="tag" id="statustag"><span class="status-dot idle"></span>en espera</span>
 </header>
 
+<div class="tabs" style="display:flex;border-bottom:1px solid var(--line);padding:0 28px;background:var(--panel)">
+  <button id="tabbtn-carga" onclick="showTab('carga')" style="flex:0 0 auto;border:none;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ink);font-weight:600;padding:12px 20px;cursor:pointer">Prueba de carga</button>
+  <button id="tabbtn-obs" onclick="showTab('obs')" style="flex:0 0 auto;border:none;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ink);font-weight:600;padding:12px 20px;cursor:pointer">Observabilidad del agente</button>
+</div>
+
+<div id="tab-carga" style="display:none">
 <div class="wrap">
   <!-- Panel de configuracion -->
   <aside class="side">
@@ -756,6 +762,21 @@ HTML = r"""<!DOCTYPE html>
       </div>
     </div>
 
+    <div class="box" style="padding:16px 16px 8px">
+      <h3>Peticiones (últimas 60) · prueba de estrés</h3>
+      <div class="tblwrap">
+        <table>
+          <thead><tr><th>User</th><th>Iter</th><th>Status</th><th>Latencia</th><th>ChatId</th><th>Detalle</th></tr></thead>
+          <tbody id="tbody"><tr><td colspan="6" style="color:var(--dim);padding:16px">Sin datos todavía.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+</div><!-- /tab-carga -->
+
+<div id="tab-obs">
+  <main class="main">
     <!-- ==== Observabilidad del agente (Serenity Star) — 1 consulta controlada ==== -->
     <div class="box" style="margin-bottom:18px">
       <h3>Observabilidad del agente · Serenity (1 consulta)</h3>
@@ -774,16 +795,8 @@ HTML = r"""<!DOCTYPE html>
           <input id="ag_code" value="AgenteOrquestaPNEB">
         </div>
       </div>
-      <div class="row2">
-        <div>
-          <label>Versión (opcional)</label>
-          <input id="ag_version" placeholder="vacío = versión publicada">
-        </div>
-        <div>
-          <label>Etiqueta (modelo / agente)</label>
-          <input id="ag_label" placeholder="p. ej. Qwen 3.8 / Agente X">
-        </div>
-      </div>
+      <label>Etiqueta (modelo / agente)</label>
+      <input id="ag_label" placeholder="p. ej. Qwen 3.8 / Agente X">
       <label>Banco de preguntas (repo de tu compañero)</label>
       <select id="ag_preset" onchange="applyPreset()">
         <option value="">— Elige una pregunta del banco —</option>
@@ -826,7 +839,7 @@ HTML = r"""<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- ==== Comparativa por etiqueta (percentiles) — reubicada aqui ==== -->
+    <!-- ==== Comparativa por etiqueta (percentiles) ==== -->
     <div class="box" style="margin-bottom:18px">
       <h3>Comparativa por etiqueta (percentiles de latencia)</h3>
       <div class="hint" style="margin-bottom:8px">
@@ -841,16 +854,6 @@ HTML = r"""<!DOCTYPE html>
             <th>Tokens medios</th><th>Coste total</th>
           </tr></thead>
           <tbody id="sbody"><tr><td colspan="11" style="color:var(--dim);padding:16px">Sin datos todavía.</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="box" style="padding:16px 16px 8px">
-      <h3>Peticiones (últimas 60) · prueba de estrés</h3>
-      <div class="tblwrap">
-        <table>
-          <thead><tr><th>User</th><th>Iter</th><th>Status</th><th>Latencia</th><th>ChatId</th><th>Detalle</th></tr></thead>
-          <tbody id="tbody"><tr><td colspan="6" style="color:var(--dim);padding:16px">Sin datos todavía.</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -871,6 +874,7 @@ update();  // Al abrir/recargar, pinta el resultado de la ultima prueba si la ha
 renderProbes();  // y el registro de consultas al agente
 renderSummary();  // y la comparativa por etiqueta / percentiles
 loadPresets();  // y el banco de preguntas en el desplegable
+showTab('obs');  // vista inicial: Observabilidad del agente
 
 async function runTest(){
   const body = {
@@ -968,8 +972,7 @@ async function runAgentProbe(){
       method:'POST', headers:{'Content-Type':'application/json'}, signal: ctrl.signal,
       body: JSON.stringify({
         api_key:key, message:msg, agent_code:ag_code.value.trim(),
-        agent_version:ag_version.value.trim(), seccion:ag_seccion.value,
-        label:ag_label.value.trim()
+        seccion:ag_seccion.value, label:ag_label.value.trim()
       })
     });
     const d = await r.json();
@@ -1086,6 +1089,18 @@ function applyPreset(){
   if(!p) return;
   ag_message.value = p.question || '';
   ag_seccion.value = p.seccion || '';
+}
+
+function showTab(name){
+  const carga = (name === 'carga');
+  document.getElementById('tab-carga').style.display = carga ? '' : 'none';
+  document.getElementById('tab-obs').style.display   = carga ? 'none' : '';
+  const bc = document.getElementById('tabbtn-carga');
+  const bo = document.getElementById('tabbtn-obs');
+  bc.style.borderBottomColor = carga ? 'var(--acc)' : 'transparent';
+  bc.style.color             = carga ? 'var(--acc)' : 'var(--ink)';
+  bo.style.borderBottomColor = carga ? 'transparent' : 'var(--acc)';
+  bo.style.color             = carga ? 'var(--ink)' : 'var(--acc)';
 }
 </script>
 </body>
