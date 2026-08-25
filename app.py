@@ -839,6 +839,22 @@ HTML = r"""<!DOCTYPE html>
       </div>
     </div>
 
+    <!-- ==== Diamante de rendimiento (radar SVG) ==== -->
+    <div class="box" style="margin-bottom:18px">
+      <h3>Diamante de rendimiento</h3>
+      <div class="hint" style="margin-bottom:8px">
+        Compara modelos (por <b>Etiqueta</b>) según nuestros parámetros — más lejos del centro = mejor.
+        Ejes: <b>Velocidad</b> (menos latencia) · <b>Coste</b> (más barato por consulta) ·
+        <b>Tokens</b> (menos por consulta) · <b>Fiabilidad</b> (% de consultas OK).
+        Escala relativa: 100 = el mejor de los comparados en ese eje (Fiabilidad es % real). Se ve mejor con 2-3 modelos.
+      </div>
+      <div style="display:flex;justify-content:center">
+        <div id="diamond-wrap" style="width:100%;max-width:480px"></div>
+      </div>
+      <div id="diamond-legend" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:6px"></div>
+      <div id="diamond-empty" class="hint" style="text-align:center">Sin datos todavía. Lanza consultas con Etiqueta para comparar modelos.</div>
+    </div>
+
     <!-- ==== Comparativa por etiqueta (percentiles) ==== -->
     <div class="box" style="margin-bottom:18px">
       <h3>Comparativa por etiqueta (percentiles de latencia)</h3>
@@ -873,6 +889,7 @@ loadDefaults();
 update();  // Al abrir/recargar, pinta el resultado de la ultima prueba si la hay
 renderProbes();  // y el registro de consultas al agente
 renderSummary();  // y la comparativa por etiqueta / percentiles
+renderDiamond();  // y el diamante de rendimiento
 loadPresets();  // y el banco de preguntas en el desplegable
 showTab('obs');  // vista inicial: Observabilidad del agente
 
@@ -997,6 +1014,7 @@ async function runAgentProbe(){
     ag_btn.disabled = false;
     renderProbes();   // refresca el registro (incluye la consulta recien hecha)
     renderSummary();  // y la comparativa por etiqueta / percentiles
+    renderDiamond();  // y el diamante de rendimiento
   }
 }
 
@@ -1058,6 +1076,87 @@ async function renderSummary(){
       + '<td>' + cost + '</td>'
       + '</tr>';
   }).join('');
+}
+
+// Colores categóricos validados (paleta dark: azul/naranja/aqua… CVD-safe)
+const DIAMOND_COLORS = ['#3987e5','#d95926','#199e70','#c98500','#d55181','#9085e9'];
+
+async function renderDiamond(){
+  const wrap = document.getElementById('diamond-wrap');
+  const leg = document.getElementById('diamond-legend');
+  const empty = document.getElementById('diamond-empty');
+  let list;
+  try { list = await (await fetch('/probes/summary?t=' + Date.now(), {cache:'no-store'})).json(); }
+  catch(e){ return; }
+  const groups = (Array.isArray(list) ? list : []).filter(g => g.count > 0 && g.lat_avg != null && g.lat_avg > 0);
+  if(!groups.length){ wrap.innerHTML=''; leg.innerHTML=''; empty.style.display=''; return; }
+  empty.style.display = 'none';
+  const shown = groups.slice(0, DIAMOND_COLORS.length);
+
+  // Métricas derivadas
+  shown.forEach(g => {
+    g._cpq = (g.cost_total != null && g.count) ? (g.cost_total / g.count) : null;
+    const tot = g.count + (g.errors || 0);
+    g._fia = tot > 0 ? (g.count / tot * 100) : 0;
+  });
+  const minLat = Math.min(...shown.map(g => g.lat_avg));
+  const toksArr = shown.map(g => g.tokens_avg).filter(v => v != null && v > 0);
+  const minTok = toksArr.length ? Math.min(...toksArr) : null;
+  const cpqArr = shown.map(g => g._cpq).filter(v => v != null && v > 0);
+  const minCpq = cpqArr.length ? Math.min(...cpqArr) : null;
+
+  // Puntuaciones 0-100 (más alto = mejor)
+  shown.forEach(g => {
+    g._sVel = (minLat && g.lat_avg) ? (minLat / g.lat_avg * 100) : 0;
+    g._sTok = (minTok && g.tokens_avg) ? (minTok / g.tokens_avg * 100) : 0;
+    g._sCos = (minCpq && g._cpq) ? (minCpq / g._cpq * 100) : 0;
+    g._sFia = g._fia;
+  });
+
+  const AX = [
+    {key:'_sVel', ang:-Math.PI/2},   // arriba
+    {key:'_sCos', ang:0},            // derecha
+    {key:'_sTok', ang:Math.PI/2},    // abajo
+    {key:'_sFia', ang:Math.PI},      // izquierda
+  ];
+  const W=420, H=380, cx=210, cy=200, R=140;
+  const LINE='#2b3444', INK='#e6edf3', DIM='#8b98a8';
+  const pt = (frac, ang) => [cx + R*frac*Math.cos(ang), cy + R*frac*Math.sin(ang)];
+  const poly = frac => AX.map(a => pt(frac, a.ang).map(n => n.toFixed(1)).join(',')).join(' ');
+
+  let svg = '<svg viewBox="0 0 '+W+' '+H+'" width="100%" font-family="system-ui,sans-serif">';
+  // anillos 25/50/75/100
+  [0.25,0.5,0.75,1].forEach(f => {
+    svg += '<polygon points="'+poly(f)+'" fill="none" stroke="'+LINE+'" stroke-width="1"'+(f===1?'':' opacity="0.55"')+'/>';
+  });
+  // ejes
+  AX.forEach(a => { const [x,y]=pt(1,a.ang); svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="'+LINE+'" stroke-width="1"/>'; });
+  // etiquetas de anillo (a lo largo del eje superior)
+  [25,50,75,100].forEach(v => { const [x,y]=pt(v/100,-Math.PI/2); svg += '<text x="'+(x+5).toFixed(1)+'" y="'+(y+3).toFixed(1)+'" fill="'+DIM+'" font-size="9">'+v+'</text>'; });
+  // etiquetas de eje
+  svg += '<text x="'+cx+'" y="'+(cy-R-12)+'" fill="'+INK+'" font-size="12" font-weight="600" text-anchor="middle">Velocidad</text>';
+  svg += '<text x="'+(cx+R+8)+'" y="'+(cy+4)+'" fill="'+INK+'" font-size="12" font-weight="600" text-anchor="start">Coste</text>';
+  svg += '<text x="'+cx+'" y="'+(cy+R+22)+'" fill="'+INK+'" font-size="12" font-weight="600" text-anchor="middle">Tokens</text>';
+  svg += '<text x="'+(cx-R-8)+'" y="'+(cy+4)+'" fill="'+INK+'" font-size="12" font-weight="600" text-anchor="end">Fiabilidad</text>';
+  // polígonos por modelo
+  shown.forEach((g,i) => {
+    const col = DIAMOND_COLORS[i % DIAMOND_COLORS.length];
+    const pts = AX.map(a => { const f=Math.max(0,Math.min(1,(g[a.key]||0)/100)); return pt(f,a.ang).map(n=>n.toFixed(1)).join(','); }).join(' ');
+    svg += '<polygon points="'+pts+'" fill="'+col+'" fill-opacity="0.12" stroke="'+col+'" stroke-width="2"><title>'+esc(g.label)+'</title></polygon>';
+    AX.forEach(a => { const f=Math.max(0,Math.min(1,(g[a.key]||0)/100)); const [x,y]=pt(f,a.ang); svg += '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3.5" fill="'+col+'"/>'; });
+  });
+  svg += '</svg>';
+  wrap.innerHTML = svg;
+
+  leg.innerHTML = shown.map((g,i) => {
+    const col = DIAMOND_COLORS[i % DIAMOND_COLORS.length];
+    return '<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:'+INK+'">'
+      + '<span style="width:12px;height:12px;border-radius:3px;background:'+col+';display:inline-block"></span>'
+      + esc(g.label) + '</span>';
+  }).join('');
+  if(groups.length > shown.length){
+    leg.innerHTML += '<span class="hint" style="margin:0">(mostrando '+shown.length+' de '+groups.length+')</span>';
+  }
 }
 
 let PRESETS = {};
